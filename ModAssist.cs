@@ -15,11 +15,11 @@ namespace CM3D2.ModAssist.Plugin
     [PluginFilter("CM3D2x64"),
     PluginFilter("CM3D2x86"),
     PluginName("CM3D2 ModAssist"),
-    PluginVersion("0.0.0.12")]
+    PluginVersion("0.0.0.13")]
     public class ModAssist : PluginBase
     {
         static string className = "ModAssist";
-        public const string Version = "0.0.0.12";
+        public const string Version = "0.0.0.13";
         readonly string basePath = Path.GetFullPath(@".\Mod\");
         readonly string[] nodeSelection = new string[] { "■", "非表示", "表示" };
 
@@ -44,6 +44,7 @@ namespace CM3D2.ModAssist.Plugin
         readonly GUILayoutOption textHeight;
 
         Vector2 scrollPos = Vector2.zero;
+        Vector2 mpnScrollPos = Vector2.zero;
         int selectedItem = 0;
 
         GUIContent[] wearMpns;
@@ -162,6 +163,7 @@ namespace CM3D2.ModAssist.Plugin
             maid = GameMain.Instance.CharacterMgr.GetMaid(0);
             outputPath = @"assist\";
             maEnabled = false;
+            mpnScrollPos = Vector2.zero;
         }
 
         private void Update()
@@ -237,6 +239,7 @@ namespace CM3D2.ModAssist.Plugin
         {
             GUILayout.BeginVertical(GUI.skin.box);
             GUILayout.Label("MOD Assist", labelStyle);
+            mpnScrollPos = GUILayout.BeginScrollView(mpnScrollPos);
             foreach (var mpnkey in Params.WearMPNs.Keys)
             {
                 if (GUILayout.Button(Params.WearMPNs[mpnkey], buttonStyle))
@@ -253,6 +256,7 @@ namespace CM3D2.ModAssist.Plugin
                     }
                 }
             }
+            GUILayout.EndScrollView();
             GUILayout.EndVertical();
             GUI.DragWindow();
         }
